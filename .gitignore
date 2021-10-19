@@ -24,3 +24,4 @@ yarn-error.log*
 
 #we will ignore target files coz they are big 
 /src/program/target
+/src/client

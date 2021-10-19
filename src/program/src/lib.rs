@@ -4,52 +4,31 @@ use solana_program::{
     account_info::{next_account_info,AccountInfo},
     entrypoint,
     entrypoint::ProgramResult,
-    pubkey::Pubkey
+    pubkey::Pubkey,
+    program_error::ProgramError,
+    msg
 };
 use borsh::{BorshSerialize,BorshDeserialize};
 
-
-
 #[derive(BorshSerialize,BorshDeserialize,Debug)]
-pub struct MetaDataUrl {
-    pub owner_of_nft:Pubkey,
-    pub meta_data_url: String,
+pub struct TokenId {
+    pub tokenid:u64,
 }
 
-#[derive(BorshSerialize,BorshDeserialize,Debug)]
-pub struct Counter {
-    pub counter:i64;
-}
 
-pub fn init_counter_() -> Counter{
-    return Counter{
-        counter:0,
-    }
-}
-
-pub fn init_Meta_() ->  MetaDataUrl{
-    return  MetaDataUrl{
-        owner_of_nft:Pubkey::default(),
-        meta_data_url:" ",
-    }
-}
 
 entrypoint!(process_instruction);
 
 pub fn process_instruction(
-    program_id: & Pubkey,
-    accounts: &[AccountInfo],
+    program_id: & Pubkey,//program id of this deployed contract.
+    accounts: &[AccountInfo],//For now  array size is only one.
     _instruction_data:&[u8],
 )-> ProgramResult {
     let account_iter=&mut accounts.iter();
     let account=next_account_info(account_iter)?;
-    let account.owner!=program_id {
+    if account.owner!=program_id {
         msg!("Sorry you don't have ownership to call this contract");
+        return Err(ProgramError::IncorrectProgramId);
     }
-    let meta_data = MetaDataUrl {
-        owner_of_nft:
-    }
-
-
     Ok(())
 }
