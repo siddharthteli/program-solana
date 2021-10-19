@@ -30,7 +30,7 @@ pub fn init_counter_() -> Counter{
 pub fn init_Meta_() ->  MetaDataUrl{
     return  MetaDataUrl{
         owner_of_nft:Pubkey::default(),
-        meta_data_url:"",
+        meta_data_url:" ",
     }
 }
 
